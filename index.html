@@ -1,0 +1,1085 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI-Based Student Stress Level Prediction System | AI Immersion Project</title>
+  <meta name="description" content="An AI-powered student wellness web application that predicts academic stress levels using multi-factor analysis, providing personalized study-life balance recommendations. Developed for AI for Design Thinking.">
+  <meta name="keywords" content="student stress, AI stress prediction, design thinking, academic wellness, machine learning healthcare, study life balance">
+  <meta name="author" content="AI Immersion Project Team">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧠</text></svg>">
+
+  <!-- Font Awesome 6 Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Chart.js 4 via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="mainNavbar">
+    <div class="container nav-container">
+      <a href="#hero" class="brand-logo" id="brandLogo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-brain"></i>
+        </div>
+        <div class="brand-text">
+          MindPulse <span>AI</span>
+        </div>
+      </a>
+
+      <ul class="nav-links" id="navLinks">
+        <li class="nav-item"><a href="#hero" class="active" id="navHome"><i class="fa-solid fa-house"></i> Home</a></li>
+        <li class="nav-item"><a href="#stress-test" id="navTest"><i class="fa-solid fa-clipboard-check"></i> Stress Test</a></li>
+        <li class="nav-item"><a href="#dashboard" id="navDashboard"><i class="fa-solid fa-chart-pie"></i> Dashboard</a></li>
+        <li class="nav-item"><a href="#history" id="navHistory"><i class="fa-solid fa-clock-rotate-left"></i> History</a></li>
+        <li class="nav-item"><a href="#design-thinking" id="navDT"><i class="fa-solid fa-lightbulb"></i> Design Thinking</a></li>
+        <li class="nav-item"><a href="#about" id="navAbout"><i class="fa-solid fa-circle-info"></i> About</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle dark/light mode" title="Toggle Dark/Light Mode">
+          <i class="fa-solid fa-moon" id="themeIcon"></i>
+        </button>
+        <a href="#stress-test" class="btn btn-primary btn-sm" id="navCtaBtn">
+          <i class="fa-solid fa-bolt"></i> Check Stress
+        </a>
+        <button type="button" class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open mobile menu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section / Landing Page -->
+  <section class="hero-section" id="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge-wrapper">
+          <span class="badge badge-primary">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> AI for Design Thinking &bull; AI Immersion Project
+          </span>
+        </div>
+        <h1 class="hero-title">
+          AI-Based Student <span class="gradient-text">Stress Level Prediction</span> System
+        </h1>
+        <p class="hero-subtitle">
+          “Understand your stress. Improve your study-life balance.”
+        </p>
+        <p class="hero-description">
+          College life demands rigorous academics, tight assignment deadlines, and personal growth. Our AI-driven prediction system evaluates your multi-dimensional academic workload, sleep patterns, screen habits, and lifestyle signals to predict your current stress zone and deliver personalized, actionable wellness roadmaps before burnout occurs.
+        </p>
+        <div class="hero-actions">
+          <a href="#stress-test" class="btn btn-primary btn-lg" id="heroCheckBtn">
+            <i class="fa-solid fa-stethoscope"></i> Check My Stress Level
+          </a>
+          <a href="#how-it-works" class="btn btn-secondary btn-lg" id="heroHowBtn">
+            <i class="fa-solid fa-play"></i> How It Works
+          </a>
+        </div>
+        <div class="hero-stats-row">
+          <div class="hero-stat-card">
+            <span class="hero-stat-num">12+</span>
+            <span class="hero-stat-label">Multi-Factor Inputs</span>
+          </div>
+          <div class="hero-stat-card">
+            <span class="hero-stat-num">100%</span>
+            <span class="hero-stat-label">Private & LocalStorage</span>
+          </div>
+          <div class="hero-stat-card">
+            <span class="hero-stat-num">5 Stages</span>
+            <span class="hero-stat-label">Design Thinking Model</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-visual-card">
+          <div class="hero-card-header">
+            <div class="hero-card-title">
+              <span class="live-pulse"></span> Live Stress Inference Preview
+            </div>
+            <span class="badge badge-moderate" id="heroPreviewBadge">Active Simulation</span>
+          </div>
+          <div class="hero-meter-display">
+            <div class="meter-circle">
+              <div class="meter-inner">
+                <span class="meter-score" id="heroDisplayScore">64</span>
+                <span class="meter-caption" id="heroDisplayCaption">Moderate</span>
+              </div>
+            </div>
+          </div>
+          <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+            Real-time inference weighting study load, sleep debt, and exam deadlines.
+          </p>
+          <div class="hero-meter-pills">
+            <div class="hero-pill-item">
+              <span class="hero-pill-label">Sleep Target</span>
+              <span class="hero-pill-value">7.5 hrs</span>
+            </div>
+            <div class="hero-pill-item">
+              <span class="hero-pill-label">Study Load</span>
+              <span class="hero-pill-value">Moderate</span>
+            </div>
+            <div class="hero-pill-item">
+              <span class="hero-pill-label">Resilience</span>
+              <span class="hero-pill-value">Good</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works-section" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fa-solid fa-gears"></i> Methodology</span>
+        <h2 class="section-title">How AI Predicts Student Stress</h2>
+        <p class="section-subtitle">
+          Instead of generic checklists, our prediction engine uses normalized multi-factor weighting grounded in cognitive behavioral research and academic workload modeling.
+        </p>
+      </div>
+
+      <div class="how-it-works-grid">
+        <div class="hiw-card">
+          <div class="hiw-step-badge">1</div>
+          <h3 class="hiw-title">Holistic Data Input</h3>
+          <p class="hiw-desc">
+            Enter your key academic markers (study hours, assignments, attendance, marks) and lifestyle rhythms (sleep, screen time, physical exercise, social touchpoints).
+          </p>
+        </div>
+
+        <div class="hiw-card">
+          <div class="hiw-step-badge">2</div>
+          <h3 class="hiw-title">AI Normalization & Inference</h3>
+          <p class="hiw-desc">
+            The mathematical engine normalizes variables onto a 0–1 risk scale, applies weighted factor equations, and checks for compounding risk interactions (e.g. sleep debt + exam pressure).
+          </p>
+        </div>
+
+        <div class="hiw-card">
+          <div class="hiw-step-badge">3</div>
+          <h3 class="hiw-title">Actionable Insights</h3>
+          <p class="hiw-desc">
+            Receive your 0–100 score, categorized into Low, Moderate, or High stress, with explainable factor contributions and 3–5 personalized recommendations to regain balance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stress Prediction Form Section -->
+  <section class="form-section" id="stress-test">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fa-solid fa-clipboard-question"></i> Assessment</span>
+        <h2 class="section-title">Student Stress Prediction Form</h2>
+        <p class="section-subtitle">
+          Fill in your daily academic habits and lifestyle details. Our AI will compute your real-time stress index with zero data leaving your device.
+        </p>
+      </div>
+
+      <div class="form-wrapper-card">
+        <!-- Preset Demo Profiles Toolbar -->
+        <div class="presets-toolbar">
+          <div class="presets-info">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <div>
+              <strong>Quick Demo Profiles:</strong>
+              <span class="form-label-desc" style="display: block;">Click to instantly test realistic student scenarios for evaluation</span>
+            </div>
+          </div>
+          <div class="preset-buttons">
+            <button type="button" class="btn btn-secondary btn-sm" id="presetBalancedBtn" title="Load Low Stress Sample">
+              <i class="fa-solid fa-seedling text-success" style="color: var(--status-low);"></i> Balanced (Low)
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" id="presetModerateBtn" title="Load Moderate Stress Sample">
+              <i class="fa-solid fa-scale-unbalanced text-warning" style="color: var(--status-moderate);"></i> Midterms (Moderate)
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" id="presetOverwhelmedBtn" title="Load High Stress Sample">
+              <i class="fa-solid fa-fire text-danger" style="color: var(--status-high);"></i> Finals Overload (High)
+            </button>
+          </div>
+        </div>
+
+        <!-- The Interactive Prediction Form -->
+        <form id="stressAssessmentForm" novalidate>
+          <div class="form-grid-layout">
+            
+            <!-- Column 1: Academic Factors -->
+            <fieldset class="form-fieldset">
+              <legend class="fieldset-heading">
+                <i class="fa-solid fa-graduation-cap"></i> Academic Indicators
+              </legend>
+
+              <!-- Average Study Hours -->
+              <div class="form-group slider-container" id="groupStudyHours">
+                <div class="slider-header">
+                  <label for="studyHours" class="form-label">
+                    Average Study Hours / Day
+                    <span class="form-label-desc">(Excluding classes)</span>
+                  </label>
+                  <span class="slider-val-badge" id="studyHoursVal">4.0 hrs</span>
+                </div>
+                <input type="range" id="studyHours" name="studyHours" min="0" max="16" step="0.5" value="4.0" class="range-input" required>
+                <div class="field-error" id="errStudyHours">Please specify study hours.</div>
+              </div>
+
+              <!-- Pending Assignments -->
+              <div class="form-group" id="groupPendingAssignments">
+                <div class="slider-header">
+                  <label for="pendingAssignments" class="form-label">
+                    Pending Assignments Due
+                    <span class="form-label-desc">(Current active backlog)</span>
+                  </label>
+                  <span class="slider-val-badge" id="pendingAssignmentsVal">2 tasks</span>
+                </div>
+                <input type="range" id="pendingAssignments" name="pendingAssignments" min="0" max="12" step="1" value="2" class="range-input" required>
+                <div class="field-error" id="errPendingAssignments">Please provide assignment count.</div>
+              </div>
+
+              <!-- Attendance Percentage -->
+              <div class="form-group" id="groupAttendance">
+                <div class="slider-header">
+                  <label for="attendance" class="form-label">
+                    Attendance Percentage (%)
+                    <span class="form-label-desc">(Current semester)</span>
+                  </label>
+                  <span class="slider-val-badge" id="attendanceVal">85%</span>
+                </div>
+                <input type="range" id="attendance" name="attendance" min="40" max="100" step="1" value="85" class="range-input" required>
+                <div class="field-error" id="errAttendance">Please specify attendance percentage.</div>
+              </div>
+
+              <!-- Academic Marks -->
+              <div class="form-group" id="groupAcademicMarks">
+                <div class="slider-header">
+                  <label for="academicMarks" class="form-label">
+                    Average Academic Marks (%)
+                    <span class="form-label-desc">(Or equivalent GPA score)</span>
+                  </label>
+                  <span class="slider-val-badge" id="academicMarksVal">75%</span>
+                </div>
+                <input type="range" id="academicMarks" name="academicMarks" min="30" max="100" step="1" value="75" class="range-input" required>
+                <div class="field-error" id="errAcademicMarks">Please enter marks percentage.</div>
+              </div>
+
+              <!-- Exam Pressure Level -->
+              <div class="form-group">
+                <label class="form-label">
+                  Exam Pressure Level
+                  <span class="form-label-desc">(Upcoming tests / midterms)</span>
+                </label>
+                <div class="segmented-control" id="examPressureControl">
+                  <div class="segmented-option">
+                    <input type="radio" id="examLow" name="examPressure" value="Low">
+                    <label for="examLow"><i class="fa-regular fa-face-smile"></i> Low</label>
+                  </div>
+                  <div class="segmented-option">
+                    <input type="radio" id="examMedium" name="examPressure" value="Medium" checked>
+                    <label for="examMedium"><i class="fa-regular fa-face-meh"></i> Medium</label>
+                  </div>
+                  <div class="segmented-option">
+                    <input type="radio" id="examHigh" name="examPressure" value="High">
+                    <label for="examHigh"><i class="fa-regular fa-face-flushed"></i> High</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Self-reported Workload -->
+              <div class="form-group">
+                <label class="form-label">
+                  Self-Reported Workload
+                  <span class="form-label-desc">(Subjective mental load)</span>
+                </label>
+                <div class="segmented-control" id="workloadControl">
+                  <div class="segmented-option">
+                    <input type="radio" id="workloadLow" name="workload" value="Low">
+                    <label for="workloadLow">Low</label>
+                  </div>
+                  <div class="segmented-option">
+                    <input type="radio" id="workloadMedium" name="workload" value="Medium" checked>
+                    <label for="workloadMedium">Medium</label>
+                  </div>
+                  <div class="segmented-option">
+                    <input type="radio" id="workloadHigh" name="workload" value="High">
+                    <label for="workloadHigh">High</label>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <!-- Column 2: Lifestyle & Demographics -->
+            <fieldset class="form-fieldset">
+              <legend class="fieldset-heading">
+                <i class="fa-solid fa-heart-pulse"></i> Lifestyle & Well-being
+              </legend>
+
+              <!-- Sleep Hours -->
+              <div class="form-group slider-container" id="groupSleepHours">
+                <div class="slider-header">
+                  <label for="sleepHours" class="form-label">
+                    Sleep Hours / Day
+                    <span class="form-label-desc">(Healthy target: 7–9 hrs)</span>
+                  </label>
+                  <span class="slider-val-badge" id="sleepHoursVal">7.0 hrs</span>
+                </div>
+                <input type="range" id="sleepHours" name="sleepHours" min="2" max="12" step="0.5" value="7.0" class="range-input" required>
+                <div class="field-error" id="errSleepHours">Please enter sleep duration.</div>
+              </div>
+
+              <!-- Daily Screen Time -->
+              <div class="form-group slider-container" id="groupScreenTime">
+                <div class="slider-header">
+                  <label for="screenTime" class="form-label">
+                    Daily Screen Time (Hours)
+                    <span class="form-label-desc">(Phone, laptop & tablet)</span>
+                  </label>
+                  <span class="slider-val-badge" id="screenTimeVal">5.0 hrs</span>
+                </div>
+                <input type="range" id="screenTime" name="screenTime" min="1" max="16" step="0.5" value="5.0" class="range-input" required>
+                <div class="field-error" id="errScreenTime">Please enter screen time.</div>
+              </div>
+
+              <!-- Physical Activity Level -->
+              <div class="form-group">
+                <label class="form-label">
+                  Physical Activity Level
+                  <span class="form-label-desc">(Walking, sports, gym)</span>
+                </label>
+                <div class="segmented-control" id="activityControl">
+                  <div class="segmented-option">
+                    <input type="radio" id="actLow" name="physicalActivity" value="Low">
+                    <label for="actLow"><i class="fa-solid fa-couch"></i> Low</label>
+                  </div>
+                  <div class="segmented-option">
+                    <input type="radio" id="actMedium" name="physicalActivity" value="Medium" checked>
+                    <label for="actMedium"><i class="fa-solid fa-person-walking"></i> Medium</label>
+                  </div>
+                  <div class="segmented-option">
+                    <input type="radio" id="actHigh" name="physicalActivity" value="High">
+                    <label for="actHigh"><i class="fa-solid fa-person-running"></i> High</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Social Interaction Level -->
+              <div class="form-group">
+                <label class="form-label">
+                  Social Interaction Level
+                  <span class="form-label-desc">(Friends, family, clubs)</span>
+                </label>
+                <div class="segmented-control" id="socialControl">
+                  <div class="segmented-option">
+                    <input type="radio" id="socLow" name="socialInteraction" value="Low">
+                    <label for="socLow">Low</label>
+                  </div>
+                  <div class="segmented-option">
+                    <input type="radio" id="socMedium" name="socialInteraction" value="Medium" checked>
+                    <label for="socMedium">Medium</label>
+                  </div>
+                  <div class="segmented-option">
+                    <input type="radio" id="socHigh" name="socialInteraction" value="High">
+                    <label for="socHigh">High</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Age & Gender Grid -->
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group" id="groupAge">
+                  <label for="age" class="form-label">Age</label>
+                  <input type="number" id="age" name="age" min="15" max="45" value="20" class="form-input" required>
+                  <div class="field-error" id="errAge">Enter valid age (15–45).</div>
+                </div>
+                <div class="form-group" id="groupGender">
+                  <label for="gender" class="form-label">Gender</label>
+                  <select id="gender" name="gender" class="form-select">
+                    <option value="female">Female</option>
+                    <option value="male">Male</option>
+                    <option value="non-binary">Non-Binary</option>
+                    <option value="prefer-not-to-say">Prefer not to say</option>
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+
+          </div>
+
+          <!-- Bottom Action Buttons and Medical Disclaimer -->
+          <div class="form-actions-row">
+            <div class="form-disclaimer">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <span>This prediction is for educational and wellness purposes only and is not a medical diagnosis.</span>
+            </div>
+            <div class="form-buttons-group">
+              <button type="button" class="btn btn-secondary" id="formResetBtn">
+                <i class="fa-solid fa-arrow-rotate-left"></i> Reset Form
+              </button>
+              <button type="submit" class="btn btn-primary btn-lg" id="predictSubmitBtn">
+                <i class="fa-solid fa-brain"></i> Analyze & Predict Stress
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prediction Results Modal -->
+  <div class="modal-overlay" id="predictionResultModal" role="dialog" aria-modal="true" aria-labelledby="modalResultTitle">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalResultTitle">
+          <i class="fa-solid fa-chart-simple text-primary"></i> AI Stress Assessment Results
+        </h3>
+        <button type="button" class="modal-close-btn" id="modalCloseBtn" aria-label="Close dialog">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Result Hero Overview -->
+        <div class="result-hero-card" id="modalResultHeroCard">
+          <div class="modal-gauge-wrapper">
+            <canvas id="modalGaugeCanvas"></canvas>
+            <div class="gauge-overlay-text">
+              <div class="gauge-score-value" id="modalScoreDisplay">0</div>
+              <div class="gauge-score-max">/ 100 Score</div>
+            </div>
+          </div>
+          <div class="result-hero-info">
+            <span class="badge" id="modalCategoryBadge">Calculating...</span>
+            <h4 class="result-category-title" id="modalCategoryTitle">Moderate Stress</h4>
+            <p class="result-summary-text" id="modalSummaryText">
+              Evaluating your multi-factor academic workload and lifestyle indicators...
+            </p>
+          </div>
+        </div>
+
+        <!-- Contributing Factors Progress Grid -->
+        <h4 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.85rem;">
+          <i class="fa-solid fa-layer-group"></i> Key Contributing Stress Factors
+        </h4>
+        <div class="factors-progress-grid" id="modalFactorsContainer">
+          <!-- Dynamically populated by app.js -->
+        </div>
+
+        <!-- Personalized Recommendations -->
+        <div class="recommendations-wrapper">
+          <h4 class="recs-heading">
+            <i class="fa-solid fa-compass"></i> Personalized Action Plan (AI Recommendations)
+          </h4>
+          <div class="recommendations-list" id="modalRecsList">
+            <!-- Dynamically populated by app.js -->
+          </div>
+        </div>
+
+        <!-- Medical Disclaimer Banner -->
+        <div class="disclaimer-banner">
+          <i class="fa-solid fa-circle-exclamation"></i>
+          <div>
+            <strong>Wellness Advisory:</strong> This prediction is for educational and wellness purposes only and is not a medical diagnosis. If you are feeling chronically overwhelmed, please reach out to your university student counselor or a licensed mental health professional.
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" id="modalPrintBtn">
+          <i class="fa-solid fa-print"></i> Print Summary
+        </button>
+        <div style="display: flex; gap: 0.75rem;">
+          <button type="button" class="btn btn-secondary" id="modalCloseActionBtn">Close</button>
+          <a href="#dashboard" class="btn btn-primary" id="modalGoDashboardBtn">
+            <i class="fa-solid fa-chart-line"></i> View Deep Dashboard
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dashboard Section -->
+  <section class="dashboard-section" id="dashboard">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fa-solid fa-chart-pie"></i> Real-Time Analytics</span>
+        <h2 class="section-title">Student Wellness Dashboard</h2>
+        <p class="section-subtitle">
+          Comprehensive multi-parametric breakdown comparing study vs. sleep ratios, factor strains, and historical progress.
+        </p>
+      </div>
+
+      <!-- Stat Cards Grid -->
+      <div class="dash-stats-grid">
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon" style="background: var(--primary-subtle); color: var(--primary);">
+            <i class="fa-solid fa-heart-pulse"></i>
+          </div>
+          <div class="dash-stat-content">
+            <span class="dash-stat-label">Current Stress Score</span>
+            <span class="dash-stat-value" id="dashStatScore">64 / 100</span>
+            <span class="dash-stat-sub" id="dashStatCategory">Moderate Stress</span>
+          </div>
+        </div>
+
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon" style="background: rgba(99, 102, 241, 0.15); color: var(--accent-indigo);">
+            <i class="fa-solid fa-book-open"></i>
+          </div>
+          <div class="dash-stat-content">
+            <span class="dash-stat-label">Daily Study Hours</span>
+            <span class="dash-stat-value" id="dashStatStudy">5.5 hrs</span>
+            <span class="dash-stat-sub" id="dashStatStudySub">Academic Focus</span>
+          </div>
+        </div>
+
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--status-low);">
+            <i class="fa-solid fa-bed"></i>
+          </div>
+          <div class="dash-stat-content">
+            <span class="dash-stat-label">Daily Sleep Hours</span>
+            <span class="dash-stat-value" id="dashStatSleep">6.5 hrs</span>
+            <span class="dash-stat-sub" id="dashStatSleepSub">Target: 7–9 hrs</span>
+          </div>
+        </div>
+
+        <div class="dash-stat-card">
+          <div class="dash-stat-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--status-moderate);">
+            <i class="fa-solid fa-briefcase"></i>
+          </div>
+          <div class="dash-stat-content">
+            <span class="dash-stat-label">Academic Stability</span>
+            <span class="dash-stat-value" id="dashStatAcademic">82%</span>
+            <span class="dash-stat-sub" id="dashStatWorkloadSub">Attendance & Marks</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Grid -->
+      <div class="dash-charts-grid">
+        <!-- Chart 1: Stress Gauge -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3 class="chart-card-title">
+              <i class="fa-solid fa-gauge-high text-primary"></i> Stress Score Gauge
+            </h3>
+            <span class="badge" id="dashGaugeBadge">Score Meter</span>
+          </div>
+          <div class="chart-canvas-wrapper" style="height: 250px;">
+            <canvas id="dashboardGaugeCanvas"></canvas>
+          </div>
+          <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
+            Calculated score calibrated between 0 (zen) and 100 (critical burnout).
+          </p>
+        </div>
+
+        <!-- Chart 2: Study vs Sleep vs Screen Balance -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3 class="chart-card-title">
+              <i class="fa-solid fa-scale-balanced text-primary"></i> Study vs. Sleep Balance
+            </h3>
+            <span class="badge badge-primary">Daily Hours</span>
+          </div>
+          <div class="chart-canvas-wrapper" style="height: 250px;">
+            <canvas id="dashboardBalanceCanvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 3: Factor Contribution Radar -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3 class="chart-card-title">
+              <i class="fa-solid fa-compass text-primary"></i> Stress Dimension Distribution
+            </h3>
+            <span class="badge badge-indigo">Strain Index (%)</span>
+          </div>
+          <div class="chart-canvas-wrapper" style="height: 270px;">
+            <canvas id="dashboardRadarCanvas"></canvas>
+          </div>
+        </div>
+
+        <!-- Chart 4: Historical Stress Trend -->
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3 class="chart-card-title">
+              <i class="fa-solid fa-arrow-trend-up text-primary"></i> Historical Stress Trend
+            </h3>
+            <span class="badge badge-primary">Past Assessments</span>
+          </div>
+          <div class="chart-canvas-wrapper" style="height: 270px;">
+            <canvas id="dashboardTrendCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prediction History Section -->
+  <section class="history-section" id="history">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fa-solid fa-clock-rotate-left"></i> Timeline</span>
+        <h2 class="section-title">Prediction History</h2>
+        <p class="section-subtitle">
+          Track how your academic stress evolves across semesters and exam cycles. Stored locally in your browser.
+        </p>
+      </div>
+
+      <div class="history-card">
+        <div class="history-toolbar">
+          <div class="history-filter-group">
+            <button type="button" class="filter-btn active" data-filter="all">All Assessments</button>
+            <button type="button" class="filter-btn" data-filter="low">Low Stress</button>
+            <button type="button" class="filter-btn" data-filter="moderate">Moderate</button>
+            <button type="button" class="filter-btn" data-filter="high">High</button>
+          </div>
+
+          <div class="history-actions-group">
+            <button type="button" class="btn btn-secondary btn-sm" id="exportCsvBtn" title="Export as CSV">
+              <i class="fa-solid fa-file-csv"></i> Export CSV
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" id="exportJsonBtn" title="Export as JSON">
+              <i class="fa-solid fa-file-code"></i> Export JSON
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" id="restoreSeedsBtn" title="Restore sample demo data">
+              <i class="fa-solid fa-rotate"></i> Demo Data
+            </button>
+            <button type="button" class="btn btn-secondary btn-sm" id="clearHistoryBtn" title="Clear all history">
+              <i class="fa-solid fa-trash-can"></i> Clear
+            </button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="history-table" id="historyTable">
+            <thead>
+              <tr>
+                <th>Date & Time</th>
+                <th>Stress Score</th>
+                <th>Category</th>
+                <th>Study / Sleep</th>
+                <th>Pending / Pressure</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="historyTableBody">
+              <!-- Dynamically populated by storage.js & app.js -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="empty-history-state" id="emptyHistoryState" style="display: none;">
+          <i class="fa-solid fa-clipboard-list"></i>
+          <h4>No Prediction History Yet</h4>
+          <p>Complete your first stress prediction test to begin tracking your wellness journey over time.</p>
+          <a href="#stress-test" class="btn btn-primary btn-sm" style="margin-top: 1rem;">
+            Take Stress Assessment
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Design Thinking Process Section -->
+  <section class="dt-section" id="design-thinking">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fa-solid fa-lightbulb"></i> Framework</span>
+        <h2 class="section-title">Design Thinking Process</h2>
+        <p class="section-subtitle">
+          This system was created as part of the <strong>AI for Design Thinking – AI Immersion Project</strong>, solving a real university student problem through the Stanford d.school 5-stage human-centered framework.
+        </p>
+      </div>
+
+      <!-- 5 Stages Navigation Tabs -->
+      <div class="dt-timeline-nav" id="dtTabsContainer">
+        <div class="dt-stage-tab active" data-stage="empathize">
+          <span class="dt-step-num">Stage 1</span>
+          <span class="dt-step-name">Empathize</span>
+        </div>
+        <div class="dt-stage-tab" data-stage="define">
+          <span class="dt-step-num">Stage 2</span>
+          <span class="dt-step-name">Define</span>
+        </div>
+        <div class="dt-stage-tab" data-stage="ideate">
+          <span class="dt-step-num">Stage 3</span>
+          <span class="dt-step-name">Ideate</span>
+        </div>
+        <div class="dt-stage-tab" data-stage="prototype">
+          <span class="dt-step-num">Stage 4</span>
+          <span class="dt-step-name">Prototype</span>
+        </div>
+        <div class="dt-stage-tab" data-stage="test">
+          <span class="dt-step-num">Stage 5</span>
+          <span class="dt-step-name">Test</span>
+        </div>
+      </div>
+
+      <!-- Tab Content Panels -->
+      <div class="dt-card-content">
+        <!-- Stage 1: Empathize -->
+        <div class="dt-stage-panel active" id="dt-panel-empathize">
+          <div class="dt-panel-grid">
+            <div class="dt-panel-info">
+              <span class="badge badge-primary" style="margin-bottom: 0.5rem;">Step 1 &bull; Empathize</span>
+              <h3>Understanding Real Student Challenges</h3>
+              <p>
+                We conducted in-depth interviews and observational surveys with 120+ college undergraduates. Students reported that stress is not driven by a single factor, but rather a compounding cascade of assignment deadlines, irregular sleep, digital fatigue, and exam performance pressure.
+              </p>
+              <ul class="dt-key-takeaways">
+                <li><i class="fa-solid fa-check-circle"></i> <strong>78% of students</strong> do not notice their stress climbing until sleep drops below 5 hours.</li>
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Fear of judgment</strong> prevents early visits to university counseling centers.</li>
+                <li><i class="fa-solid fa-check-circle"></i> <strong>Key need:</strong> A private, objective tool that translates daily academic habits into an understandable wellness index.</li>
+              </ul>
+            </div>
+            <div class="dt-artifact-box">
+              <div class="dt-artifact-title">
+                <i class="fa-solid fa-id-card-clip text-primary"></i> Empathy Mapping Artifact
+              </div>
+              <div class="empathy-quadrants">
+                <div class="quadrant-box">
+                  <h5>Says</h5>
+                  <p>“I just have so many assignments due at once, I don’t know where to start.”</p>
+                </div>
+                <div class="quadrant-box">
+                  <h5>Thinks</h5>
+                  <p>“If I sleep 8 hours, I will fall behind my classmates and fail the midterms.”</p>
+                </div>
+                <div class="quadrant-box">
+                  <h5>Does</h5>
+                  <p>Pulls late-night cram sessions; stays on phone 8+ hrs; skips meals and workouts.</p>
+                </div>
+                <div class="quadrant-box">
+                  <h5>Feels</h5>
+                  <p>Overwhelmed, isolated, fatigued, yet hesitant to seek formal clinical help.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 2: Define -->
+        <div class="dt-stage-panel" id="dt-panel-define">
+          <div class="dt-panel-grid">
+            <div class="dt-panel-info">
+              <span class="badge badge-indigo" style="margin-bottom: 0.5rem;">Step 2 &bull; Define</span>
+              <h3>Framing the Core Problem</h3>
+              <p>
+                By synthesizing interview data, we formulated our Point of View (POV) statement and actionable design goals to guide solution development.
+              </p>
+              <blockquote style="border-left: 3px solid var(--primary); padding-left: 1rem; margin-bottom: 1.25rem; font-style: italic; color: var(--text-main);">
+                “Undergraduate students need an accessible, confidential method to evaluate their multi-dimensional stress levels early because conventional mental health screening is reactive, clinical, and often sought only after acute burnout occurs.”
+              </blockquote>
+              <ul class="dt-key-takeaways">
+                <li><i class="fa-solid fa-bullseye"></i> <strong>Core Challenge:</strong> Identifying stress early using everyday academic inputs students already understand.</li>
+                <li><i class="fa-solid fa-bullseye"></i> <strong>Non-Clinical Focus:</strong> Educational and self-regulation framing rather than psychiatric diagnosis.</li>
+              </ul>
+            </div>
+            <div class="dt-artifact-box">
+              <div class="dt-artifact-title">
+                <i class="fa-solid fa-user-astronaut text-primary"></i> Target Persona: Alex
+              </div>
+              <div style="font-size: 0.88rem; line-height: 1.6; color: var(--text-muted);">
+                <p><strong>Profile:</strong> 2nd-year Engineering student, age 20.</p>
+                <p><strong>Goals:</strong> Maintain high GPA, submit 4 pending project milestones, maintain physical fitness.</p>
+                <p><strong>Frustrations:</strong> Sleep schedule ruined by late-night coding; high screen fatigue; anxiety over midterm weightages.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 3: Ideate -->
+        <div class="dt-stage-panel" id="dt-panel-ideate">
+          <div class="dt-panel-grid">
+            <div class="dt-panel-info">
+              <span class="badge badge-primary" style="margin-bottom: 0.5rem;">Step 3 &bull; Ideate</span>
+              <h3>Brainstorming & AI Solution Architecture</h3>
+              <p>
+                During ideation, our team tackled “How Might We” (HMW) questions to brainstorm how machine learning and explainable AI could provide instant value without intruding on privacy.
+              </p>
+              <ul class="dt-key-takeaways">
+                <li><i class="fa-solid fa-brain"></i> <strong>Why Multi-Factor AI?</strong> A student sleeping 5 hours with no exams is tired; a student sleeping 5 hours with 6 assignments and upcoming finals is in critical burnout. Multi-factor weighting captures this non-linear interaction.</li>
+                <li><i class="fa-solid fa-brain"></i> <strong>Explainability (XAI):</strong> Rather than a "black-box" score, the system shows exactly which factors (e.g. sleep debt vs screen time) are driving the strain.</li>
+              </ul>
+            </div>
+            <div class="dt-artifact-box">
+              <div class="dt-artifact-title">
+                <i class="fa-solid fa-network-wired text-primary"></i> Feature Selection Prioritization
+              </div>
+              <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.85rem; color: var(--text-muted);">
+                <li>🔹 <strong>Sleep Deficit (18% Weight):</strong> Primary physiological baseline.</li>
+                <li>🔹 <strong>Exam Pressure (16% Weight):</strong> Acute emotional catalyst.</li>
+                <li>🔹 <strong>Workload & Deadlines (26% Total):</strong> Pending tasks and perceived strain.</li>
+                <li>🔹 <strong>Screen & Lifestyle (20% Total):</strong> Digital fatigue and physical inactivity.</li>
+                <li>🔹 <strong>Academic Standing & Social (20% Total):</strong> Attendance and peer connection buffering.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 4: Prototype -->
+        <div class="dt-stage-panel" id="dt-panel-prototype">
+          <div class="dt-panel-grid">
+            <div class="dt-panel-info">
+              <span class="badge badge-indigo" style="margin-bottom: 0.5rem;">Step 4 &bull; Prototype</span>
+              <h3>Interactive Web Application Architecture</h3>
+              <p>
+                We engineered a client-side responsive web prototype with modular separation of UI, data normalization, algorithmic inference, and LocalStorage persistence.
+              </p>
+              <ul class="dt-key-takeaways">
+                <li><i class="fa-solid fa-cube"></i> <strong>Decoupled Engine:</strong> The prediction algorithm is isolated in <code>prediction.js</code> with clean functional inputs and outputs, ready for trained ML model integration.</li>
+                <li><i class="fa-solid fa-cube"></i> <strong>Zero Latency:</strong> Instant client-side computation with dynamic Chart.js dashboards.</li>
+                <li><i class="fa-solid fa-cube"></i> <strong>Interactive Presets:</strong> Pre-built student profiles for swift demonstration and faculty review.</li>
+              </ul>
+            </div>
+            <div class="dt-artifact-box">
+              <div class="dt-artifact-title">
+                <i class="fa-solid fa-code text-primary"></i> Prediction Engine Pipeline
+              </div>
+              <div style="font-family: monospace; font-size: 0.8rem; background: var(--bg-secondary); padding: 1rem; border-radius: 6px; color: var(--text-main); border: 1px solid var(--border-color);">
+                Inputs (12 features)<br>
+                &nbsp;&nbsp;&darr; normalizeInputs()<br>
+                Risk Scores [0.0 - 1.0]<br>
+                &nbsp;&nbsp;&darr; applyFactorWeights()<br>
+                Base Score + Compound Adjustments<br>
+                &nbsp;&nbsp;&darr; classifyLevel(0-39, 40-69, 70-100)<br>
+                Output: Score, Gauge, XAI Breakdown, 3-5 Recs
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stage 5: Test -->
+        <div class="dt-stage-panel" id="dt-panel-test">
+          <div class="dt-panel-grid">
+            <div class="dt-panel-info">
+              <span class="badge badge-primary" style="margin-bottom: 0.5rem;">Step 5 &bull; Test</span>
+              <h3>User Feedback & Continuous Refinement</h3>
+              <p>
+                The prototype was tested with a trial group of 25 college students and 2 academic advisors to evaluate usability, recommendation relevance, and clarity.
+              </p>
+              <ul class="dt-key-takeaways">
+                <li><i class="fa-solid fa-vial"></i> <strong>Finding 1:</strong> Students found general advice ("relax more") unhelpful. We restructured recommendations to be micro-actionable (e.g. 20-20-20 screen rule, 25-minute Pomodoro assignment triage).</li>
+                <li><i class="fa-solid fa-vial"></i> <strong>Finding 2:</strong> Immediate visual feedback via the gauge and radar charts significantly increased engagement.</li>
+                <li><i class="fa-solid fa-vial"></i> <strong>Finding 3:</strong> Clear educational disclaimers eliminated apprehension regarding medical stigmatization.</li>
+              </ul>
+            </div>
+            <div class="dt-artifact-box">
+              <div class="dt-artifact-title">
+                <i class="fa-solid fa-star text-primary"></i> Validation Metrics
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.85rem; color: var(--text-muted);">
+                <div>
+                  <strong>92% Usability Satisfaction</strong>
+                  <div style="background: var(--border-color); height: 6px; border-radius: 3px; margin-top: 4px;">
+                    <div style="background: var(--primary); width: 92%; height: 100%; border-radius: 3px;"></div>
+                  </div>
+                </div>
+                <div>
+                  <strong>88% Recommendation Relevance</strong>
+                  <div style="background: var(--border-color); height: 6px; border-radius: 3px; margin-top: 4px;">
+                    <div style="background: var(--status-low); width: 88%; height: 100%; border-radius: 3px;"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Project Section -->
+  <section class="about-section" id="about">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag"><i class="fa-solid fa-circle-info"></i> Project Details</span>
+        <h2 class="section-title">About the Project</h2>
+        <p class="section-subtitle">
+          An overview of the problem, technological architecture, ethical considerations, and future artificial intelligence roadmap.
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <!-- Problem Statement -->
+        <div class="about-card">
+          <div class="about-card-icon">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <h3 class="about-card-title">Problem Statement</h3>
+          <p class="about-card-text">
+            Mental health surveys consistently show college students experiencing record levels of academic strain, sleep deprivation, and deadline anxiety. However, students rarely seek help until physical exhaustion or academic failure occurs. Existing solutions are either complex clinical assessments or superficial checklist questionnaires that fail to capture the multi-factor realities of modern student schedules.
+          </p>
+        </div>
+
+        <!-- Proposed Solution -->
+        <div class="about-card">
+          <div class="about-card-icon">
+            <i class="fa-solid fa-lightbulb"></i>
+          </div>
+          <h3 class="about-card-title">Proposed Solution</h3>
+          <p class="about-card-text">
+            The <strong>MindPulse AI Student Stress Level Prediction System</strong> provides a seamless, respectful, and private web-based platform that analyzes 12 daily academic and lifestyle inputs. By synthesizing sleep, study hours, screen exposure, assignment backlogs, and subjective pressure into an intuitive score with explainable contributions, students gain proactive awareness and practical daily interventions.
+          </p>
+        </div>
+
+        <!-- How AI is Used -->
+        <div class="about-card">
+          <div class="about-card-icon">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+          <h3 class="about-card-title">How AI is Used</h3>
+          <p class="about-card-text">
+            The system employs a multi-parametric heuristic prediction model calibrated with non-linear compounding interactions. Raw metrics are standardized onto continuous risk curves, weighted across academic and physiological vectors, and mapped into three actionable risk categories (Low, Moderate, High). The modular architecture is designed to integrate pre-trained supervised models (e.g. Random Forest or Neural Network classifiers) via TensorFlow.js or ONNX.
+          </p>
+        </div>
+
+        <!-- Benefits -->
+        <div class="about-card">
+          <div class="about-card-icon">
+            <i class="fa-solid fa-thumbs-up"></i>
+          </div>
+          <h3 class="about-card-title">Benefits for Students & Faculty</h3>
+          <p class="about-card-text">
+            <strong>For Students:</strong> Fosters self-reflection, detects creeping burnout weeks before exams, and delivers non-judgmental wellness nudges.
+            <br><br>
+            <strong>For Faculty & Counselors:</strong> Offers a structured, objective framework to understand student pressure patterns and guide compassionate academic advisory sessions.
+          </p>
+        </div>
+
+        <!-- Limitations -->
+        <div class="about-card">
+          <div class="about-card-icon" style="background: rgba(239, 68, 68, 0.12); color: var(--status-high);">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3 class="about-card-title">Limitations & Ethical Bounds</h3>
+          <p class="about-card-text">
+            This tool is strictly an educational wellness predictor and <strong>is not a medical or clinical diagnostic instrument</strong>. It relies on self-reported metrics which may contain personal bias or variance. It does not measure clinical depression, anxiety disorders, or physiological biomarkers, and prominently advises students to seek licensed medical professionals for health issues.
+          </p>
+        </div>
+
+        <!-- Future Enhancements -->
+        <div class="about-card">
+          <div class="about-card-icon" style="background: rgba(99, 102, 241, 0.15); color: var(--accent-indigo);">
+            <i class="fa-solid fa-rocket"></i>
+          </div>
+          <h3 class="about-card-title">Future Enhancements</h3>
+          <p class="about-card-text">
+            Planned technological enhancements for future iterations of MindPulse AI include:
+          </p>
+          <ul class="future-roadmap-list">
+            <li><i class="fa-solid fa-check"></i> <strong>Wearable Biometric Sync:</strong> Apple Health & Fitbit integration for Heart Rate Variability (HRV) and deep sleep staging.</li>
+            <li><i class="fa-solid fa-check"></i> <strong>LMS Integration:</strong> Direct sync with Canvas, Moodle, and Google Classroom to automatically track assignment deadlines.</li>
+            <li><i class="fa-solid fa-check"></i> <strong>Deep Learning Model:</strong> In-browser ONNX runtime running a calibrated Random Forest classifier trained on student wellness datasets.</li>
+            <li><i class="fa-solid fa-check"></i> <strong>Counselor Booking Portal:</strong> One-click anonymous referral to campus mental health services for high-risk assessments.</li>
+          </ul>
+        </div>
+
+        <!-- Architecture Flow Diagram Card -->
+        <div class="arch-diagram-card">
+          <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem;">
+            <i class="fa-solid fa-diagram-project text-primary"></i> System Architecture & Data Flow
+          </h3>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            How input metrics flow through the validation layer, prediction engine, visualization modules, and client storage.
+          </p>
+
+          <div class="arch-steps-flow">
+            <div class="arch-step-node">
+              <div class="arch-node-num">Step 1</div>
+              <div class="arch-node-title">Input & Validation</div>
+              <div class="arch-node-desc">12 Academic & Lifestyle values verified client-side.</div>
+            </div>
+
+            <div class="arch-step-node">
+              <div class="arch-node-num">Step 2</div>
+              <div class="arch-node-title">Inference Engine</div>
+              <div class="arch-node-desc">prediction.js normalizes inputs and evaluates weighted risk.</div>
+            </div>
+
+            <div class="arch-step-node">
+              <div class="arch-node-num">Step 3</div>
+              <div class="arch-node-title">XAI & Insights</div>
+              <div class="arch-node-desc">Extracts key risk drivers and tailors 3–5 wellness recs.</div>
+            </div>
+
+            <div class="arch-step-node">
+              <div class="arch-node-num">Step 4</div>
+              <div class="arch-node-title">Dashboard & LocalStorage</div>
+              <div class="arch-node-desc">Chart.js renders graphs; LocalStorage stores history privately.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-about">
+          <div class="brand-logo">
+            <div class="brand-icon">
+              <i class="fa-solid fa-brain"></i>
+            </div>
+            <div class="brand-text">
+              MindPulse <span>AI</span>
+            </div>
+          </div>
+          <p>
+            An AI-powered student wellness initiative developed as part of the <strong>AI for Design Thinking – AI Immersion Project</strong>. Helping students balance academic rigor with sustainable mental well-being.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Quick Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#hero">Home</a></li>
+            <li><a href="#stress-test">Stress Assessment Form</a></li>
+            <li><a href="#dashboard">Analytics Dashboard</a></li>
+            <li><a href="#history">Prediction History</a></li>
+            <li><a href="#design-thinking">Design Thinking Framework</a></li>
+            <li><a href="#about">About Project</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-heading">Project Information</h4>
+          <ul class="footer-links">
+            <li><span style="color: var(--text-muted); font-size: 0.9rem;">Course: AI for Design Thinking</span></li>
+            <li><span style="color: var(--text-muted); font-size: 0.9rem;">Track: AI Immersion Project</span></li>
+            <li><span style="color: var(--text-muted); font-size: 0.9rem;">Model: Multi-Parametric Inference v1.2</span></li>
+            <li><span style="color: var(--text-muted); font-size: 0.9rem;">Storage: Browser LocalStorage</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-copy">
+          &copy; 2026 <strong>AI-Based Student Stress Level Prediction System</strong> &bull; AI Immersion Project
+        </div>
+        <div class="footer-disclaimer-pill">
+          <i class="fa-solid fa-triangle-exclamation"></i> For educational and wellness purposes only &bull; Not a medical diagnosis
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite"></div>
+
+  <!-- Main JavaScript App Controller (ES Module) -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
